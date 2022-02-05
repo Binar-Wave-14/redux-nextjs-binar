@@ -1,12 +1,13 @@
 import { useState } from "react"
 import { useDispatch, useSelector } from "react-redux"
-import { addTodo, deleteTodo } from "../redux/actions/todos"
+import { addTodo, deleteTodo, editTodo } from "../redux/actions/todos"
 
 export default function Todos() {
     const dispatch = useDispatch()
 
     const todos = useSelector(store => store.todos)
     const [todo, setTodo] = useState('')
+    const [idEdit, setIdEdit] = useState(0)
 
     const handleAddTodo = () => {
         dispatch(
@@ -25,15 +26,33 @@ export default function Todos() {
         )
     }
 
+    const handleEditTodo = () => {
+        dispatch(
+            editTodo({
+                id: idEdit,
+                content: todo
+            })
+        )
+
+        setIdEdit(0)
+        setTodo('')
+    }
+
     return (
         <div>
             <h1>Todos App</h1>
             {
                 todos && todos.data.length > 0 ? 
                 todos.data.map(todo => (
-                    <div key={todo.id} style={{display: 'flex', alignItems: 'center', width: '250px', justifyContent: 'space-between'}}>
+                    <div key={todo.id} style={{display: 'flex', alignItems: 'center', width: '300px', justifyContent: 'space-between'}}>
                         <p>{todo.content}</p>
-                        <button onClick={handleDeleteTodo(todo.id)}>Hapus</button>
+                        <div>
+                            <button onClick={e => {
+                                setTodo(todo.content)
+                                setIdEdit(todo.id)
+                            }}>Edit</button>
+                            <button onClick={handleDeleteTodo(todo.id)}>Hapus</button>
+                        </div>
                     </div>
                 )) : (
                     <div>
@@ -42,9 +61,9 @@ export default function Todos() {
                 )
             }
 
-            <div style={{width: '250px', justifyContent: 'space-between', display: 'flex'}}>
+            <div style={{width: '300px', justifyContent: 'space-between', display: 'flex'}}>
                 <input style={{flex: 1}} type="text" name="todo" id="todo" value={todo} onChange={e => setTodo(e.target.value)} />
-                <button onClick={handleAddTodo}>Add Todo</button>
+                <button onClick={idEdit > 0 ? handleEditTodo : handleAddTodo}>Simpan</button>
             </div>
         </div>
     )

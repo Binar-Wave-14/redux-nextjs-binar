@@ -1,4 +1,4 @@
-import {ADD_TODO, DELETE_TODO} from '../constants/todos'
+import {ADD_TODO, DELETE_TODO, EDIT_TODO} from '../constants/todos'
 
 export const addTodo = (payload) => {
     return {
@@ -10,6 +10,13 @@ export const addTodo = (payload) => {
 export const deleteTodo = (payload) => {
     return {
         type: DELETE_TODO,
+        payload
+    }
+}
+
+export const editTodo = (payload) => {
+    return {
+        type: EDIT_TODO,
         payload
     }
 }
