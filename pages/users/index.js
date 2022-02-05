@@ -1,7 +1,7 @@
 import { useEffect } from "react"
 import { useSelector } from "react-redux"
 import { useDispatch } from "react-redux"
-import { getUserAction } from "../redux/actions/users"
+import { getUserAction } from "../../redux/actions/users"
 
 export default function Users() {
     const dispatch = useDispatch()

@@ -1,7 +1,8 @@
-import {GET_USERS} from '../constants/users'
+import {GET_DETAIL, GET_USERS} from '../constants/users'
 
 export const initialState = {
-    data: []
+    data: [],
+    detail: {}
 }
 
 export const userReducer = (state = initialState, action) => {
@@ -10,6 +11,11 @@ export const userReducer = (state = initialState, action) => {
             return {
                 ...state,
                 data: action.payload,
+            }
+        case GET_DETAIL:
+            return {
+                ...state,
+                detail: action.payload
             }
         default:
             return state
