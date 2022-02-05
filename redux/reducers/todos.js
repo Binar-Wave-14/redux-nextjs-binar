@@ -1,4 +1,4 @@
-import {ADD_TODO} from '../constants/todos'
+import {ADD_TODO, DELETE_TODO} from '../constants/todos'
 
 export const initialState = {
     data: [
@@ -22,6 +22,11 @@ export const todosReducer = (state = initialState, action) => {
                     ...state.data,
                     action.payload
                 ]
+            }
+        case DELETE_TODO:
+            return {
+                ...state,
+                data: state.data.filter(val => val.id !== action.payload)
             }
         default:
             return state
