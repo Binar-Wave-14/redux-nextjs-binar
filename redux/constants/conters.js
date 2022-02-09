@@ -1,0 +1,3 @@
+export const INCREMENT_COUNTER = 'counter/INCREMENT_COUNTER'
+export const DECREMENT_COUNTER = 'counter/DECREMENT_COUNTER'
+export const UPDATE_COUNTER = 'counter/UPDATE_COUNTER'
