@@ -1,23 +1,53 @@
+import Axios from "axios"
 import { useEffect } from "react"
 import { useSelector } from "react-redux"
 import { useDispatch } from "react-redux"
 import { getUserAction } from "../../redux/actions/users"
 
-export default function Users() {
-    const dispatch = useDispatch()
-    const users = useSelector(state => state.users)
+export async function getStaticProps() {
+    const data = await Axios.get('https://jsonplaceholder.typicode.com/users')
+    return {
+        props: {
+            users: data.data.map(val => {
+                return {
+                id: val.id,
+                name: val.name,
+                phone: val.phone,
+                username: val.username,
+                address: val.address.city
+                }
+            })
+        },
+        revalidate: 60
+    }
+}
 
-    useEffect(() => {
-        dispatch(
-            getUserAction()
-        )
-    }, [dispatch])
+// export async function getServerSideProps(context) {
+//     const data = await Axios.get('https://jsonplaceholder.typicode.com/users')
+
+//     return {
+//       props: {
+//         users: data.data.map(val => {
+//             return {
+//             id: val.id,
+//             name: val.name,
+//             phone: val.phone,
+//             username: val.username,
+//             address: val.address.city
+//             }
+//         })
+//       },
+//     }
+// }
+
+export default function Users(props) {
+    const users = props.users
 
     return (
         <div>
             <h1>List User</h1>
             {
-                users.data.length > 0 ? users.data.map(user => (
+                users.length > 0 ? users.map(user => (
                     <div key={user.id}>
                         <p>Nama: {user.name}</p>
                         <p>No. HP: {user.phone}</p>
